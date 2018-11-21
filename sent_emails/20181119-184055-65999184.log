@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Password reset on localhost:8000
+From: webmaster@localhost
+To: skshivammahajan@gmail.com
+Date: Mon, 19 Nov 2018 13:10:55 -0000
+Message-ID: <154263305559.11332.460660539258193731@5CG4522FWP.ericsson.se>
+
+
+You're receiving this email because you requested a password reset for your user account at localhost:8000.
+
+Please go to the following page and choose a new password:
+
+http://localhost:8000/user/reset/MQ/51f-ee5031444d7d9e5e640e/
+
+Your username, in case you've forgotten: admin
+
+Thanks for using our site!
+
+The localhost:8000 team
+
+
+
+-------------------------------------------------------------------------------
