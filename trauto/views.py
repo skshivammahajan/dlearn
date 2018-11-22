@@ -1,6 +1,10 @@
+from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.shortcuts import render
 import openpyxl
 from django.contrib.auth.decorators import login_required
+
+from ericauto import settings
 
 
 @login_required(login_url='/user/login/')
@@ -35,4 +39,16 @@ def index(request):
             excel_data.append(row_data)
 
         print(excel_data)
-        return render(request, 'file_upload.html', {"excel_data":excel_data})
+        return render(request, 'file_upload.html', {"excel_data": excel_data})
+
+
+def mail(request):
+    subject = "Greetings"
+    msg = "Congratulations for your success"
+    to = "shivam.b.gupta@ericsson.com"
+    res = send_mail(subject, msg, settings.EMAIL_HOST_USER, [to])
+    if res == 1:
+        msg = "Mail Sent Successfuly"
+    else:
+        msg = "Mail could not sent"
+    return HttpResponse(msg)
