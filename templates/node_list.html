@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container mt-3">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Server IP</th>
+            <th>Node IP</th>
+            <th>Node Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <td>{{ user.id }}</td>
+              <td>{{ user.oss_ip }}</td>
+              <td>{{ user.node_ip }}</td>
+              <td>{{ user.node_name }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if users.has_other_pages %}
+        <ul class="pagination">
+          {% if users.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ users.previous_page_number }}">&laquo;</a></li>
+          {% else %}
+            <li class="page-item" class="disabled"><span>&laquo;</span></li>
+          {% endif %}
+          {% for i in users.paginator.page_range %}
+            {% if users.number == i %}
+              <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+            {% else %}
+              <li class="page-item"><a class="page-link"  href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if users.has_next %}
+            <li class="page-item"><a class="page-link"  href="?page={{ users.next_page_number }}">&raquo;</a></li>
+          {% else %}
+            <li class="page-item" class="disabled"><span>&raquo;</span></li>
+          {% endif %}
+        </ul>
+      {% endif %}
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  </body>
+</html>

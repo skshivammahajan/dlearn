@@ -1,10 +1,12 @@
 from django.core.mail import send_mail
+from django.core.paginator import Paginator , PageNotAnInteger , EmptyPage
 from django.http import HttpResponse
 from django.shortcuts import render
 import openpyxl
 from django.contrib.auth.decorators import login_required
 
 from ericauto import settings
+from trauto.models import NodeInventory
 
 
 @login_required(login_url='/user/login/')
@@ -39,6 +41,10 @@ def index(request):
             excel_data.append(row_data)
 
         print(excel_data)
+
+        for data in excel_data:
+            node = NodeInventory(node_name=data[-1], node_ip=data[1], oss_ip=data[0])
+            node.save()
         return render(request, 'file_upload.html', {"excel_data": excel_data})
 
 
@@ -52,3 +58,19 @@ def mail(request):
     else:
         msg = "Mail could not sent"
     return HttpResponse(msg)
+
+
+def node_list(request):
+    user_list = NodeInventory.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(user_list, 20)
+
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+    print ( users.paginator.page_range )
+    return render(request, 'node_list.html', { 'users': users })
